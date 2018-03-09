@@ -12,7 +12,7 @@
 
     <fragment
         android:id="@+id/fragment_List"
-        android:name="com.shuja1497.fragments.BookListFragment"
+        android:name="com.shuja1497.fragments.ClubListFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/fragment_Description"
-        android:name="com.shuja1497.fragments.BookDiscFragment"
+        android:name="com.shuja1497.fragments.ClubDescFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

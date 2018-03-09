@@ -1,23 +1,24 @@
 package com.shuja1497.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link BookListFragment.OnFragmentInteractionListener} interface
+ * {@link OnSelectedClubChangeListener} interface
  * to handle interaction events.
- * Use the {@link BookListFragment#newInstance} factory method to
+ * Use the {@link ClubListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BookListFragment extends Fragment {
+public class ClubListFragment extends android.app.Fragment
+        implements RadioGroup.OnCheckedChangeListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -27,9 +28,10 @@ public class BookListFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnSelectedClubChangeListener mListener;
+    private OnSelectedClubChangeListener mClubChangeListener;
 
-    public BookListFragment() {
+    public ClubListFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +41,11 @@ public class BookListFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment BookListFragment.
+     * @return A new instance of fragment ClubListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BookListFragment newInstance(String param1, String param2) {
-        BookListFragment fragment = new BookListFragment();
+    public static ClubListFragment newInstance(String param1, String param2) {
+        ClubListFragment fragment = new ClubListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,31 +66,59 @@ public class BookListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_book_list, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_book_list, container, false);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        // Connect the listener to the radio group
+        RadioGroup group = view.findViewById(R.id.bookSelectGroup);
+        group.setOnCheckedChangeListener(this);
+        return view;
     }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnSelectedClubChangeListener) {
+            mClubChangeListener = (OnSelectedClubChangeListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnSelectedClubChangeListener");
         }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        mClubChangeListener = null;
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        // Translate radio button to book index
+        int bookIndex = translateIdToIndex(checkedId);
+
+        // Get parent Activity and send notification
+//        mClubChangeListener = (OnSelectedClubChangeListener) getActivity();
+        if (mClubChangeListener!=null)
+            mClubChangeListener.onSelectedClubChangeListener(bookIndex);
+
+    }
+
+    private int translateIdToIndex(int checkedId) {
+        int index = -1;
+        switch (checkedId) {
+            case R.id.radioButton:
+                index = 0 ;
+                break;
+            case R.id.radioButton2:
+                index = 1 ;
+                break;
+            case R.id.radioButton3:
+                index = 2 ;
+                break;
+            case R.id.radioButton4:
+                index = 3 ;
+                break;
+        }
+        return index;
     }
 
     /**
@@ -101,8 +131,7 @@ public class BookListFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public interface OnSelectedClubChangeListener {
+        void onSelectedClubChangeListener(int clubIndex);
     }
 }

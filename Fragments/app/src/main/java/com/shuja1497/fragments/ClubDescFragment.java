@@ -7,18 +7,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link BookDiscFragment.OnFragmentInteractionListener} interface
+ * {@link ClubDescFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link BookDiscFragment#newInstance} factory method to
+ * Use the {@link ClubDescFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BookDiscFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
+public class ClubDescFragment extends android.app.Fragment {
+
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -27,9 +28,13 @@ public class BookDiscFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+
+    String[] mClubDescriptions;
+    TextView mClubDescriptionTextView;
+
     private OnFragmentInteractionListener mListener;
 
-    public BookDiscFragment() {
+    public ClubDescFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +44,11 @@ public class BookDiscFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment BookDiscFragment.
+     * @return A new instance of fragment ClubDescFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BookDiscFragment newInstance(String param1, String param2) {
-        BookDiscFragment fragment = new BookDiscFragment();
+    public static ClubDescFragment newInstance(String param1, String param2) {
+        ClubDescFragment fragment = new ClubDescFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,7 +69,11 @@ public class BookDiscFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_book_disc, container, false);
+        View view = inflater.inflate(R.layout.fragment_book_disc, container, false);
+
+        mClubDescriptions = getResources().getStringArray(R.array.description_array);
+        mClubDescriptionTextView = view.findViewById(R.id.textView);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -74,6 +83,13 @@ public class BookDiscFragment extends Fragment {
         }
     }
 
+    public void setBook(int bookIndex) {
+// Lookup the book description
+        String bookDescription = mClubDescriptions[bookIndex];
+// Display it
+        mClubDescriptionTextView.setText(bookDescription);
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -81,7 +97,7 @@ public class BookDiscFragment extends Fragment {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnSelectedClubChangeListener");
         }
     }
 

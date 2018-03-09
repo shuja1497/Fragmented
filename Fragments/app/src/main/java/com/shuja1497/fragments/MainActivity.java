@@ -1,15 +1,13 @@
 package com.shuja1497.fragments;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ClubListFragment.OnSelectedClubChangeListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,5 +38,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSelectedClubChangeListener(int clubIndex) {
+        // Access the FragmentManager
+        FragmentManager fragmentManager = getFragmentManager();
+
+        ClubDescFragment clubDescFragment = (ClubDescFragment)
+                fragmentManager.findFragmentById(R.id.fragment_Description);
+        if(clubDescFragment != null)
+            clubDescFragment.setBook(clubIndex);
     }
 }
