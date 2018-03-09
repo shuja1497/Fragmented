@@ -8,5 +8,5 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:gravity="fill_horizontal"
-        android:text="@string/description" />
+        android:text="@string/barcelona_descr" />
 </ScrollView>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.shuja1497.fragments.MainActivity"
+    tools:showIn="@layout/activity_main"
+    android:orientation="horizontal" android:baselineAligned="false">
+
+    <fragment
+        android:id="@+id/fragment_List"
+        android:name="com.shuja1497.fragments.BookListFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        tools:layout="@layout/fragment_book_list" />
+
+    <fragment
+        android:id="@+id/fragment_Description"
+        android:name="com.shuja1497.fragments.BookDiscFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        tools:layout="@layout/fragment_book_disc" />
+
+</LinearLayout>
