@@ -1,6 +1,7 @@
 package com.shuja1497.fragments;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -44,10 +45,20 @@ public class MainActivity extends AppCompatActivity implements ClubListFragment.
     public void onSelectedClubChangeListener(int clubIndex) {
         // Access the FragmentManager
         FragmentManager fragmentManager = getFragmentManager();
-
+// Get the club description fragment
         ClubDescFragment clubDescFragment = (ClubDescFragment)
                 fragmentManager.findFragmentById(R.id.fragment_Description);
-        if(clubDescFragment != null)
+
+        // Check validity of fragment reference
+        if (clubDescFragment == null  || !clubDescFragment.isVisible() ){
+            // Use activity to display description
+            Intent intent = new Intent(this, ClubDescActivity.class);
+            intent.putExtra(ClubDescActivity.CLUB_INDEX, clubIndex);
+            startActivity(intent);
+        }
+        else {
+            // Use contained fragment to display description
             clubDescFragment.setBook(clubIndex);
+        }
     }
 }

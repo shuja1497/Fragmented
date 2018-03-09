@@ -18,12 +18,12 @@
         android:layout_weight="1"
         tools:layout="@layout/fragment_book_list" />
 
-    <fragment
-        android:id="@+id/fragment_Description"
-        android:name="com.shuja1497.fragments.ClubDescFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        tools:layout="@layout/fragment_book_disc" />
+    <!--<fragment-->
+        <!--android:id="@+id/fragment_Description"-->
+        <!--android:name="com.shuja1497.fragments.ClubDescFragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--tools:layout="@layout/fragment_book_disc" />-->
 
 </LinearLayout>
