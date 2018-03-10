@@ -8,15 +8,15 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.shuja1497.fragments.MainActivity"
     tools:showIn="@layout/activity_main"
-    android:orientation="horizontal" android:baselineAligned="false">
+    android:orientation="horizontal"
+    android:baselineAligned="false">
 
     <fragment
         android:id="@+id/fragment_List"
-        android:name="com.shuja1497.fragments.ClubListFragment"
+        android:name="com.shuja1497.fragments.ClubListFragment2"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        tools:layout="@layout/fragment_book_list" />
+        android:layout_weight="1"/>
 
     <fragment
         android:id="@+id/fragment_Description"

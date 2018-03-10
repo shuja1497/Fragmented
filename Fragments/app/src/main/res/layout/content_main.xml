@@ -12,11 +12,10 @@
 
     <fragment
         android:id="@+id/fragment_List"
-        android:name="com.shuja1497.fragments.ClubListFragment"
+        android:name="com.shuja1497.fragments.ClubListFragment2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        tools:layout="@layout/fragment_book_list" />
+        android:layout_weight="1" />
 
     <!--<fragment-->
         <!--android:id="@+id/fragment_Description"-->

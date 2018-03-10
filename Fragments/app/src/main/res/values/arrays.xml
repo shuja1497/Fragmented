@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="club_titles">
+        <item>@string/fc_barcelona</item>
+        <item>@string/manchester_city</item>
+        <item>@string/real_madrid</item>
+        <item>@string/bayern_munich</item>
+    </string-array>
+
+    <string-array name="description_array">
+        <item>@string/barcelona_descr</item>
+        <item>@string/man_city_descr</item>
+        <item>@string/madrid_descr</item>
+        <item>@string/bayern_descr</item>
+    </string-array>
+
+</resources>
