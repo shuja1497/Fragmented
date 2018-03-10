@@ -41,5 +41,9 @@
     . </string>
 
     <string name="description">Description</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_title">My Dialog Fragment</string>
+    <string name="dialog_text_view">Confirm ?</string>
 
 </resources>

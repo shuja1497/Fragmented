@@ -8,7 +8,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements ClubListFragment.OnSelectedClubChangeListener{
+public class MainActivity extends AppCompatActivity implements ClubListFragment.OnSelectedClubChangeListener
+
+        , MyDialogFragment.OnButtonClickListener{
+
+    private ClubDescFragment mClubDescFragment;
+    private FragmentManager mFragmentManager;
+    private int mSelectedClubIndex;
+    private MyDialogFragment mMyDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,22 +50,39 @@ public class MainActivity extends AppCompatActivity implements ClubListFragment.
 
     @Override
     public void onSelectedClubChangeListener(int clubIndex) {
-        // Access the FragmentManager
-        FragmentManager fragmentManager = getFragmentManager();
-// Get the club description fragment
-        ClubDescFragment clubDescFragment = (ClubDescFragment)
-                fragmentManager.findFragmentById(R.id.fragment_Description);
 
-        // Check validity of fragment reference
-        if (clubDescFragment == null  || !clubDescFragment.isVisible() ){
-            // Use activity to display description
-            Intent intent = new Intent(this, ClubDescActivity.class);
-            intent.putExtra(ClubDescActivity.CLUB_INDEX, clubIndex);
-            startActivity(intent);
-        }
-        else {
-            // Use contained fragment to display description
-            clubDescFragment.setBook(clubIndex);
+        mSelectedClubIndex = clubIndex;
+        // Access the FragmentManager
+        mFragmentManager = getFragmentManager();
+// Get the club description fragment
+        mClubDescFragment = (ClubDescFragment)
+                mFragmentManager.findFragmentById(R.id.fragment_Description);
+
+
+        mMyDialogFragment = new MyDialogFragment();
+        mMyDialogFragment.show(getFragmentManager(), null);
+    }
+
+    @Override
+    public void onButtonClick(int buttonId) {
+
+        switch (buttonId){
+            case R.id.button_yes:
+                // Check validity of fragment reference
+                if (mClubDescFragment == null  || !mClubDescFragment.isVisible() ){
+                    // Use activity to display description
+                    Intent intent = new Intent(this, ClubDescActivity.class);
+                    intent.putExtra(ClubDescActivity.CLUB_INDEX, mSelectedClubIndex);
+                    startActivity(intent);
+                }
+                else {
+                    // Use contained fragment to display description
+                    mClubDescFragment.setBook(mSelectedClubIndex);
+                }
+                break;
+            case R.id.button_no:
+                mMyDialogFragment.dismiss();
+                break;
         }
     }
 }
