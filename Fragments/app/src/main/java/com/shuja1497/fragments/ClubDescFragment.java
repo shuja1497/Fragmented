@@ -20,11 +20,14 @@ import android.widget.TextView;
  */
 public class ClubDescFragment extends android.app.Fragment {
 
+    // Book index argument name
+    public static final String CLUB_INDEX = "club_index";
+    // Book index default value
+    private static final int CLUB_INDEX_NOT_SET = -1;
+
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -46,7 +49,6 @@ public class ClubDescFragment extends android.app.Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment ClubDescFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static ClubDescFragment newInstance(String param1, String param2) {
         ClubDescFragment fragment = new ClubDescFragment();
         Bundle args = new Bundle();
@@ -73,21 +75,29 @@ public class ClubDescFragment extends android.app.Fragment {
 
         mClubDescriptions = getResources().getStringArray(R.array.description_array);
         mClubDescriptionTextView = view.findViewById(R.id.textView);
+
+        // Retrieve the club index if attached
+        Bundle args = getArguments();
+        int bookIndex = args != null ?args.getInt(CLUB_INDEX, CLUB_INDEX_NOT_SET) : CLUB_INDEX_NOT_SET;
+
+        // If we find the club index, use it
+        if (bookIndex != CLUB_INDEX_NOT_SET)
+            setClub(bookIndex);
+
         return view;
     }
 
-//    // TODO: Rename method, update argument and hook method into UI event
 //    public void onButtonPressed(Uri uri) {
 //        if (mListener != null) {
 //            mListener.onFragmentInteraction(uri);
 //        }
 //    }
 
-    public void setBook(int bookIndex) {
+    public void setClub(int bookIndex) {
 // Lookup the book description
-        String bookDescription = mClubDescriptions[bookIndex];
+        String clubDescription = mClubDescriptions[bookIndex];
 // Display it
-        mClubDescriptionTextView.setText(bookDescription);
+        mClubDescriptionTextView.setText(clubDescription);
     }
 
 //    @Override

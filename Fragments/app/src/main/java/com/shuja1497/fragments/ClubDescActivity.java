@@ -23,7 +23,7 @@ public class ClubDescActivity extends AppCompatActivity {
             ClubDescFragment bookDescFragment = (ClubDescFragment)
                     fm.findFragmentById(R.id.fragment_Description);
             // Display the club title
-            bookDescFragment.setBook(clubIndex);
+            bookDescFragment.setClub(clubIndex);
         }
     }
 }

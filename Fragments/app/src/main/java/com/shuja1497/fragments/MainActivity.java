@@ -1,6 +1,8 @@
 package com.shuja1497.fragments;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +14,9 @@ public class MainActivity extends AppCompatActivity implements ClubListFragment.
 
         , MyDialogFragment.OnButtonClickListener{
 
-    private ClubDescFragment mClubDescFragment;
-    private FragmentManager mFragmentManager;
     private int mSelectedClubIndex;
     private MyDialogFragment mMyDialogFragment;
+    private boolean mIsFragmentDynamic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,17 @@ public class MainActivity extends AppCompatActivity implements ClubListFragment.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        FragmentManager mFragmentManager = getFragmentManager();
+        FragmentTransaction mFragmentTransaction= mFragmentManager.beginTransaction();
+        Fragment clubDescrFrag = mFragmentManager.findFragmentById(R.id.fragment_Description);
+
+        mIsFragmentDynamic = clubDescrFrag == null || !clubDescrFrag.isInLayout();
+
+        if (mIsFragmentDynamic){
+            ClubListFragment2 frag = new ClubListFragment2();
+            mFragmentTransaction.add(R.id.root_layout, frag, "ListFragment");
+            mFragmentTransaction.commit();
+        }
     }
 
     @Override
@@ -53,8 +65,9 @@ public class MainActivity extends AppCompatActivity implements ClubListFragment.
 
         mSelectedClubIndex = clubIndex;
         // Access the FragmentManager
-        mFragmentManager = getFragmentManager();
+        FragmentManager mFragmentManager = getFragmentManager();
 // Get the club description fragment
+        ClubDescFragment mClubDescFragment = new ClubDescFragment();
         mClubDescFragment = (ClubDescFragment)
                 mFragmentManager.findFragmentById(R.id.fragment_Description);
 
@@ -66,18 +79,34 @@ public class MainActivity extends AppCompatActivity implements ClubListFragment.
     @Override
     public void onButtonClick(int buttonId) {
 
+        ClubDescFragment mClubDescFragment;
+        FragmentManager mFragmentManager = getFragmentManager();
+
         switch (buttonId){
             case R.id.button_yes:
                 // Check validity of fragment reference
-                if (mClubDescFragment == null  || !mClubDescFragment.isVisible() ){
+//                if (mClubDescFragment == null  || !mClubDescFragment.isVisible() ){
                     // Use activity to display description
-                    Intent intent = new Intent(this, ClubDescActivity.class);
-                    intent.putExtra(ClubDescActivity.CLUB_INDEX, mSelectedClubIndex);
-                    startActivity(intent);
+//                    Intent intent = new Intent(this, ClubDescActivity.class);
+//                    intent.putExtra(ClubDescActivity.CLUB_INDEX, mSelectedClubIndex);
+//                    startActivity(intent);
+                if (mIsFragmentDynamic){
+                    FragmentTransaction mFragmentTransaction= mFragmentManager.beginTransaction();
+                    ClubDescFragment clubDescFragment = new ClubDescFragment();
+                    Bundle args = new Bundle();
+                    args.putInt(ClubDescFragment.CLUB_INDEX, mSelectedClubIndex);
+                    clubDescFragment.setArguments(args);
+//                    mFragmentTransaction = mFragmentManager.beginTransaction();
+                    mFragmentTransaction.replace(R.id.root_layout, clubDescFragment, "ClubDescription");
+                    mFragmentTransaction.addToBackStack(null);
+                    mFragmentTransaction.setCustomAnimations(android.R.animator.fade_in,
+                            android.R.animator.fade_out);
+                    mFragmentTransaction.commit();
                 }
                 else {
                     // Use contained fragment to display description
-                    mClubDescFragment.setBook(mSelectedClubIndex);
+                    mClubDescFragment = (ClubDescFragment) mFragmentManager.findFragmentById(R.id.fragment_Description);
+                    mClubDescFragment.setClub(mSelectedClubIndex);
                 }
                 break;
             case R.id.button_no:
